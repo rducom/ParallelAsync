@@ -28,5 +28,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build
-      run: dotnet build --configuration Release
+    - name: Pack
+      run: dotnet pack --configuration Release -o artefacts
+ 
+    - name: Setup Nuget
+      run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
+    - name: Nuget push
+      run: dotnet nuget push artefacts/*.nupkg -s github --skip-duplicate
