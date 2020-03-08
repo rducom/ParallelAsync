@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParallelAsync", "src\ParallelAsync.csproj", "{43ADDD54-E551-45BA-AB24-ABE5F18E9931}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParallelAsync.Tests", "tests\ParallelAsync.Tests.csproj", "{9E9D3F38-9E31-4551-BF68-E9E48A46C184}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43ADDD54-E551-45BA-AB24-ABE5F18E9931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43ADDD54-E551-45BA-AB24-ABE5F18E9931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43ADDD54-E551-45BA-AB24-ABE5F18E9931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43ADDD54-E551-45BA-AB24-ABE5F18E9931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9D3F38-9E31-4551-BF68-E9E48A46C184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9D3F38-9E31-4551-BF68-E9E48A46C184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9D3F38-9E31-4551-BF68-E9E48A46C184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9D3F38-9E31-4551-BF68-E9E48A46C184}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72B94039-A422-4E97-BFE4-E9690E23B355}
+	EndGlobalSection
+EndGlobal
