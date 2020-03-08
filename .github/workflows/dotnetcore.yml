@@ -19,11 +19,14 @@ jobs:
 
     - name: SonarScanner begin
       run: artifacts/dotnet-sonarscanner begin /k:"ParallelAsync" /o:"rducom-github" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.cs.opencover.reportsPaths="./coverage.opencover.xml"
-
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    
+    - name: Test
+      run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutput=../ /p:CoverletOutputFormat=opencover
 
     - name: SonarScanner end
       run: artifacts/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build
+      run: dotnet build --configuration Release
