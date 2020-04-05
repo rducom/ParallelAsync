@@ -73,7 +73,7 @@ jobs:
       run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
 
     - name: Pack
-      run: dotnet pack --configuration Release -o artefacts
+      run: dotnet pack --configuration Release -o artefacts -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
  
     # - name: Nuget push
     #   run: dotnet nuget push artefacts/*.nupkg -s github --skip-duplicate
