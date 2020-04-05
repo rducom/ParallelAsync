@@ -1,5 +1,11 @@
 name: .NET Core
-on: [push]
+on: 
+  push:
+    tags:
+      - '**'
+    branches:
+      - master
+  pull_request:
 
 jobs:
   build:
@@ -73,7 +79,14 @@ jobs:
       run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
 
     - name: Pack
-      run: dotnet pack --configuration Release -o artefacts -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      run: dotnet pack --configuration Release -o artifacts -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
  
-    # - name: Nuget push
-    #   run: dotnet nuget push artefacts/*.nupkg -s github --skip-duplicate
+    - name: Nuget prerelease push
+      run: dotnet nuget push artifacts/*.nupkg -s github --skip-duplicate
+
+    - name: Nuget org push
+      if: startsWith(github.ref, 'refs/tags/')
+      run: echo "Tag detected"
+    
+    - name: Dump ref
+      run: echo ${{github.ref}}
