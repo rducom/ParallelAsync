@@ -32,11 +32,17 @@ jobs:
     - name: Setup SonarScanner
       run: dotnet tool install --tool-path artifacts dotnet-sonarscanner
 
+    - name: Setup ReportGenerator
+      run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
     - name: SonarScanner begin
-      run: artifacts/dotnet-sonarscanner begin /k:"ParallelAsync" /o:"rducom-github" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.coverageReportPaths="./coverage/SonarQube.xml"
+      run: artifacts/dotnet-sonarscanner begin /k:"ParallelAsync" /o:"rducom-github" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.coverageReportPaths="./sonarCoverage/SonarQube.xml"
 
     - name: Test
       run: dotnet test --configuration Release --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory:./coverage
+
+    - name: Merge coverages
+      run: reportgenerator -reports:./coverage/*/*.xml -targetdir:./sonarCoverage -reporttypes:SonarQube
 
     - name: SonarScanner end
       run: artifacts/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
