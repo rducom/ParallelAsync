@@ -1,5 +1,5 @@
 name: .NET Core
-on: 
+on:
   push:
     tags:
       - '**'
@@ -18,17 +18,17 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.302
 
 
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.2
+      uses: gittools/actions/gitversion/setup@v0.9.4
       with:
-          versionSpec: '5.2.0'
+          versionSpec: '5.3.7'
 
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.9.2
+      uses: gittools/actions/gitversion/execute@v0.9.4
     - run: |
         echo "Major: ${{ steps.gitversion.outputs.major }}"
         echo "Minor: ${{ steps.gitversion.outputs.minor }}"
@@ -66,7 +66,7 @@ jobs:
 
     - name: SonarScanner begin
       run: artifacts/dotnet-sonarscanner begin /k:"ParallelAsync" /o:"rducom-github" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io/" /d:sonar.cs.opencover.reportsPaths="./coverage.opencover.xml"
-    
+
     - name: Test
       run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutput=../ /p:CoverletOutputFormat=opencover
 
@@ -80,13 +80,13 @@ jobs:
 
     - name: Pack
       run: dotnet pack --configuration Release -o artifacts -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
- 
+
     - name: Nuget prerelease push
       run: dotnet nuget push artifacts/*.nupkg -s github --skip-duplicate
 
     - name: Nuget org push
       if: startsWith(github.ref, 'refs/tags/')
       run: echo "Tag detected"
-    
+
     - name: Dump ref
       run: echo ${{github.ref}}
